@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomDropdownButtonClass extends StatelessWidget {
-  List<String> values;
-  double width;
-  CustomDropdownButtonClass({super.key, required this.values, required this.width});
+  final List<String> values;
+  final double width;
+  const CustomDropdownButtonClass({super.key, required this.values, required this.width});
 
   @override
   Widget build(BuildContext context) {

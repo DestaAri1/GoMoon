@@ -2,31 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/custom_dropdown_button.dart';
 
 class HomePage extends StatelessWidget {
-  late double _deviceHeight, _deviceWidth;
-
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    _deviceHeight = MediaQuery.of(context).size.height;
-    _deviceWidth = MediaQuery.of(context).size.width;
+    final double deviceHeight = MediaQuery.of(context).size.height;
+    final double deviceWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.05),
-          width: _deviceWidth,
-          height: _deviceHeight,
+          padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.05),
+          width: deviceWidth,
+          height: deviceHeight,
           child: Stack(
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [_pageTitle(), _bookRideWidget()],
+                children: [
+                  _pageTitle(),
+                  _bookRideWidget(deviceHeight, deviceWidth),
+                ],
               ),
               Align(
                 alignment: Alignment.centerRight,
-                child: _astroImageWidget(),
+                child: _astroImageWidget(deviceHeight, deviceWidth),
               ),
             ],
           ),
@@ -46,11 +48,11 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _astroImageWidget() {
+  Widget _astroImageWidget(double height, double width) {
     return Container(
-      height: _deviceHeight * 0.5,
-      width: _deviceWidth * 0.65,
-      decoration: BoxDecoration(
+      height: height * 0.5,
+      width: width * 0.65,
+      decoration: const BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.fill,
           image: AssetImage("assets/images/astro_moon.png"),
@@ -59,56 +61,54 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _bookRideWidget() {
+  Widget _bookRideWidget(double height, double width) {
     return SizedBox(
-      height: _deviceHeight * 0.25,
+      height: height * 0.25,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _destinationDropdownWidget(),
-          _travellersInformationWidget(),
-          _rideButton(),
+          _destinationDropdownWidget(width),
+          _travellersInformationWidget(width),
+          _rideButton(width, height),
         ],
       ),
     );
   }
 
-  Widget _destinationDropdownWidget() {
+  Widget _destinationDropdownWidget(double width) {
     List<String> items = ['Alfwa', 'Formula'];
-    return CustomDropdownButtonClass(values: items, width: _deviceWidth);
+    return CustomDropdownButtonClass(values: items, width: width);
   }
 
-  Widget _travellersInformationWidget() {
+  Widget _travellersInformationWidget(double width) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         CustomDropdownButtonClass(
           values: const ["1", "2", "3", "4"],
-          width: _deviceWidth * 0.40,
+          width: width * 0.40,
         ),
         CustomDropdownButtonClass(
           values: const ["Economy", "First", "Bussiness", "Executive"],
-          width: _deviceWidth * 0.35,
+          width: width * 0.35,
         ),
       ],
     );
   }
 
-  Widget _rideButton() {
+  Widget _rideButton(double width, double height) {
     return Container(
-      margin: EdgeInsets.only(bottom: _deviceHeight * 0.02),
-      width: _deviceWidth,
+      margin: EdgeInsets.only(bottom: height * 0.02),
+      width: width,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
       child: MaterialButton(
         onPressed: () {},
-        child: Text("Book Ride", style: TextStyle(color: Colors.black)),
+        child: const Text("Book Ride", style: TextStyle(color: Colors.black)),
       ),
     );
   }
